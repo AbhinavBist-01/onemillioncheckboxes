@@ -151,8 +151,6 @@
     <div id="container">
       <script src="/socket.io/socket.io.js"></script>
       <script>
-        const CHECKBOX_COUNT = 1000;
-
         const container = document.getElementById("container");
         const socket = io();
 
@@ -165,18 +163,25 @@
             input.checked = checked;
           }
         });
-        new Array(CHECKBOX_COUNT).fill(null).forEach((_, index) => {
-          const input = document.createElement("input");
-          input.type = "checkbox";
-          input.id = `checkbox-${index}`;
+        window.addEventListener("load", async () => {
+          const response = await fetch("/checkboxes", { method: "GET" });
+          const data = await response.json();
 
-          input.addEventListener("change", (event) => {
-            const checked = event.target.checked;
-            console.log("checkbox changed", { index, checked });
-            socket.emit("client:checkbox:change", { index, checked });
-          });
+          if (data && data.checkboxes) {
+            data.checkboxes.forEach((checked, index) => {
+              const input = document.createElement("input");
+              input.type = "checkbox";
+              input.id = `checkbox-${index}`;
+              input.checked = checked;
 
-          container.appendChild(input);
+              input.addEventListener("change", (event) => {
+                const checked = event.target.checked;
+                console.log("checkbox changed", { index, checked });
+                socket.emit("client:checkbox:change", { index, checked });
+              });
+              container.appendChild(input);
+            });
+          }
         });
       </script>
     </div>
