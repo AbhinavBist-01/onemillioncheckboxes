@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OneMillionCheckBoxes</title>
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap");
+
+    :root {
+      --bg-top: #0f172a;
+      --bg-mid: #172554;
+      --bg-bottom: #022c22;
+      --panel: rgba(6, 8, 20, 0.68);
+      --panel-border: rgba(148, 163, 184, 0.25);
+      --text-main: #e2e8f0;
+      --text-soft: #93c5fd;
+      --accent: #22d3ee;
+      --accent-2: #34d399;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: clamp(1rem, 2vw, 2.2rem);
+      color: var(--text-main);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(
+          circle at 20% 15%,
+          rgba(34, 211, 238, 0.14),
+          transparent 40%
+        ),
+        radial-gradient(
+          circle at 85% 80%,
+          rgba(52, 211, 153, 0.14),
+          transparent 35%
+        ),
+        linear-gradient(
+          160deg,
+          var(--bg-top),
+          var(--bg-mid) 48%,
+          var(--bg-bottom)
+        );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      font-family: "Bebas Neue", "Segoe UI", sans-serif;
+      font-size: clamp(2.1rem, 6vw, 4rem);
+      color: #f8fafc;
+      text-shadow: 0 0 26px rgba(34, 211, 238, 0.38);
+    }
+
+    h1::after {
+      content: "1,000 tiny decisions";
+      display: block;
+      margin-top: 0.2rem;
+      letter-spacing: 0.18em;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      font-size: clamp(0.72rem, 2.2vw, 0.96rem);
+      font-weight: 500;
+      color: var(--text-soft);
+      text-transform: none;
+    }
+
+    #container {
+      width: min(1100px, 100%);
+      padding: clamp(0.85rem, 2.4vw, 1.7rem);
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      background: var(--panel);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow:
+        0 18px 48px rgba(2, 6, 23, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
+      gap: 0.45rem;
+      align-items: center;
+      animation: fade-in 600ms ease;
+    }
+
+    #container input[type="checkbox"] {
+      margin: 0;
+      width: 1.15rem;
+      height: 1.15rem;
+      justify-self: center;
+      cursor: pointer;
+      accent-color: var(--accent);
+      filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.22));
+      transition:
+        transform 140ms ease,
+        filter 140ms ease;
+    }
+
+    #container input[type="checkbox"]:hover {
+      transform: scale(1.18);
+      filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.55));
+    }
+
+    #container input[type="checkbox"]:checked {
+      accent-color: var(--accent-2);
+      filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.6));
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 0.85rem;
+      }
+
+      #container {
+        grid-template-columns: repeat(auto-fill, minmax(24px, 1fr));
+        gap: 0.35rem;
+        border-radius: 14px;
+      }
+
+      #container input[type="checkbox"] {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  </style>
+  <body>
+    <h1>Checkboxes!!</h1>
+
+    <div id="container">
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+        const CHECKBOX_COUNT = 1000;
+
+        const container = document.getElementById("container");
+        const socket = io();
+
+        new Array(CHECKBOX_COUNT).fill(null).forEach((_, index) => {
+          const input = document.createElement("input");
+          input.type = "checkbox";
+
+          input.addEventListener("change", (event) => {
+            const checked = event.target.checked;
+            console.log("checkbox changed", { index, checked });
+            socket.emit("client:checkbox:change", { index, checked });
+          });
+
+          container.appendChild(input);
+        });
+      </script>
+    </div>
+  </body>
+</html>
