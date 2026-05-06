@@ -3,222 +3,228 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OneMillionCheckBoxes</title>
-  </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap");
+    <title>One Million Checkboxes</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap");
 
-    :root {
-      --bg-top: #0f172a;
-      --bg-mid: #172554;
-      --bg-bottom: #022c22;
-      --panel: rgba(6, 8, 20, 0.68);
-      --panel-border: rgba(148, 163, 184, 0.25);
-      --text-main: #e2e8f0;
-      --text-soft: #93c5fd;
-      --accent: #22d3ee;
-      --accent-2: #34d399;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: clamp(1rem, 2vw, 2.2rem);
-      color: var(--text-main);
-      font-family: "Space Grotesk", "Segoe UI", sans-serif;
-      background:
-        radial-gradient(
-          circle at 20% 15%,
-          rgba(34, 211, 238, 0.14),
-          transparent 40%
-        ),
-        radial-gradient(
-          circle at 85% 80%,
-          rgba(52, 211, 153, 0.14),
-          transparent 35%
-        ),
-        linear-gradient(
-          160deg,
-          var(--bg-top),
-          var(--bg-mid) 48%,
-          var(--bg-bottom)
-        );
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    h1 {
-      margin: 0 0 1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      font-family: "Bebas Neue", "Segoe UI", sans-serif;
-      font-size: clamp(2.1rem, 6vw, 4rem);
-      color: #f8fafc;
-      text-shadow: 0 0 26px rgba(34, 211, 238, 0.38);
-    }
-
-    h1::after {
-      content: "1,000 tiny decisions";
-      display: block;
-      margin-top: 0.2rem;
-      letter-spacing: 0.18em;
-      font-family: "Space Grotesk", "Segoe UI", sans-serif;
-      font-size: clamp(0.72rem, 2.2vw, 0.96rem);
-      font-weight: 500;
-      color: var(--text-soft);
-      text-transform: none;
-    }
-
-    #container {
-      width: min(1100px, 100%);
-      padding: clamp(0.85rem, 2.4vw, 1.7rem);
-      border: 1px solid var(--panel-border);
-      border-radius: 18px;
-      background: var(--panel);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow:
-        0 18px 48px rgba(2, 6, 23, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(28px, 1fr));
-      gap: 0.45rem;
-      align-items: center;
-      animation: fade-in 600ms ease;
-    }
-
-    #error-banner {
-      width: min(1100px, 100%);
-      margin: 0 0 0.9rem;
-      padding: 0.8rem 1rem;
-      border: 1px solid rgba(248, 113, 113, 0.45);
-      border-radius: 14px;
-      background: rgba(69, 10, 10, 0.72);
-      color: #fecaca;
-      font-family: "Space Grotesk", "Segoe UI", sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      line-height: 1.4;
-      display: none;
-      box-shadow: 0 12px 32px rgba(69, 10, 10, 0.28);
-    }
-
-    #error-banner[data-visible="true"] {
-      display: block;
-    }
-
-    #container input[type="checkbox"] {
-      margin: 0;
-      width: 1.15rem;
-      height: 1.15rem;
-      justify-self: center;
-      cursor: pointer;
-      accent-color: var(--accent);
-      filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.22));
-      transition:
-        transform 140ms ease,
-        filter 140ms ease;
-    }
-
-    #container input[type="checkbox"]:hover {
-      transform: scale(1.18);
-      filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.55));
-    }
-
-    #container input[type="checkbox"]:checked {
-      accent-color: var(--accent-2);
-      filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.6));
-    }
-
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
+      :root {
+        --bg: #f2f3f5;
+        --panel: #f8f9fb;
+        --line: #e3e7ee;
+        --text-main: #0f172a;
+        --text-soft: #556172;
+        --s1: #e7b7d6;
+        --s2: #cbb8e8;
+        --s3: #b8c4ef;
+        --s4: #87d5de;
+        --s5: #89dcc1;
+        --s6: #b7df7f;
+        --s7: #f3d67a;
+        --s8: #efb8b6;
+        --s9: #e79ecf;
+        --s10: #aeb1f3;
       }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      * {
+        box-sizing: border-box;
       }
-    }
 
-    @media (max-width: 560px) {
       body {
-        padding: 0.85rem;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text-main);
+        font-family: "Manrope", "Segoe UI", sans-serif;
+      }
+
+      .shell {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        background: #f0f2f5;
+        border: 1px solid var(--line);
+        border-bottom: none;
+        padding: 2rem 2rem 1.25rem;
+      }
+
+      .title {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .summary {
+        margin-top: 0.7rem;
+        font-size: 1.15rem;
+        color: var(--text-soft);
+      }
+
+      .error-banner {
+        margin-top: 0.8rem;
+        display: none;
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+        border-radius: 10px;
+        padding: 0.55rem 0.8rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+
+      .error-banner.show {
+        display: block;
+      }
+
+      .grid-wrap {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        overflow: auto;
+        padding: 1rem;
+        flex: 1;
       }
 
       #container {
+        min-width: 1180px;
+        display: grid;
         grid-template-columns: repeat(auto-fill, minmax(24px, 1fr));
-        gap: 0.35rem;
-        border-radius: 14px;
+        gap: 4px;
       }
 
       #container input[type="checkbox"] {
-        width: 1rem;
-        height: 1rem;
+        margin: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 9px;
+        appearance: none;
+        background: #f7f8fa;
+        border: 1px solid #d5dce6;
+        cursor: pointer;
+        transition:
+          transform 140ms ease,
+          background-color 140ms ease,
+          border-color 140ms ease;
       }
-    }
-  </style>
+
+      #container input[type="checkbox"]:hover {
+        transform: scale(1.04);
+      }
+
+      #container input[type="checkbox"]:checked {
+        background: var(--segment-color, var(--s1));
+        border-color: transparent;
+      }
+
+      @media (max-width: 768px) {
+        .topbar {
+          padding: 1.2rem 1rem 1rem;
+        }
+
+        #container {
+          min-width: 900px;
+        }
+      }
+    </style>
+  </head>
   <body>
-    <h1>Checkboxes!!</h1>
+    <div class="shell">
+      <header class="topbar">
+        <h1 class="title">One Million Checkboxes</h1>
+        <div id="summary" class="summary">0 / 0 checked</div>
+        <div id="errorBanner" class="error-banner"></div>
+      </header>
 
-    <div id="error-banner" role="alert" aria-live="polite"></div>
-
-    <div id="container">
-      <script src="/socket.io/socket.io.js"></script>
-      <script>
-        const container = document.getElementById("container");
-        const errorBanner = document.getElementById("error-banner");
-        const socket = io();
-
-        socket.on("server-error", (data) => {
-          const errorMessage = data.error;
-          errorBanner.textContent = errorMessage || "Something went wrong.";
-          errorBanner.dataset.visible = "true";
-
-          window.clearTimeout(window.errorBannerTimeoutId);
-          window.errorBannerTimeoutId = window.setTimeout(() => {
-            errorBanner.textContent = "";
-            delete errorBanner.dataset.visible;
-          }, 4000);
-        });
-
-        socket.on("server:checkbox:change", (data) => {
-          console.log(`Socket server `, data);
-          const { index, checked } = data;
-
-          const input = document.getElementById(`checkbox-${index}`);
-          if (input) {
-            input.checked = checked;
-          }
-        });
-        window.addEventListener("load", async () => {
-          const response = await fetch("/checkboxes", { method: "GET" });
-          const data = await response.json();
-
-          if (data && data.checkboxes) {
-            data.checkboxes.forEach((checked, index) => {
-              const input = document.createElement("input");
-              input.type = "checkbox";
-              input.id = `checkbox-${index}`;
-              input.checked = checked;
-
-              input.addEventListener("change", (event) => {
-                const checked = event.target.checked;
-                console.log("checkbox changed", { index, checked });
-                socket.emit("client:checkbox:change", { index, checked });
-              });
-              container.appendChild(input);
-            });
-          }
-        });
-      </script>
+      <section class="grid-wrap">
+        <div id="container"></div>
+      </section>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const container = document.getElementById("container");
+      const summary = document.getElementById("summary");
+      const errorBanner = document.getElementById("errorBanner");
+      const socket = io();
+
+      const SECTION_COUNT = 10;
+      const SECTION_COLORS = [
+        "var(--s1)",
+        "var(--s2)",
+        "var(--s3)",
+        "var(--s4)",
+        "var(--s5)",
+        "var(--s6)",
+        "var(--s7)",
+        "var(--s8)",
+        "var(--s9)",
+        "var(--s10)",
+      ];
+
+      function getSection(index, total) {
+        const sectionSize = Math.ceil(total / SECTION_COUNT);
+        return Math.min(SECTION_COUNT - 1, Math.floor(index / sectionSize));
+      }
+
+      function updateSummary() {
+        const total = container.querySelectorAll('input[type="checkbox"]').length;
+        const checked = container.querySelectorAll(
+          'input[type="checkbox"]:checked',
+        ).length;
+        summary.textContent = `${checked.toLocaleString()} / ${total.toLocaleString()} checked`;
+      }
+
+      let errorTimer;
+      function showError(message) {
+        errorBanner.textContent = message || "Please wait before sending another update.";
+        errorBanner.classList.add("show");
+        clearTimeout(errorTimer);
+        errorTimer = setTimeout(() => {
+          errorBanner.classList.remove("show");
+          errorBanner.textContent = "";
+        }, 2300);
+      }
+
+      socket.on("server:checkbox:change", ({ index, checked }) => {
+        const input = document.getElementById(`checkbox-${index}`);
+        if (!input) return;
+        input.checked = checked;
+        updateSummary();
+      });
+
+      socket.on("server-error", ({ error }) => {
+        showError(error);
+      });
+
+      window.addEventListener("load", async () => {
+        const response = await fetch("/checkboxes", { method: "GET" });
+        const data = await response.json();
+
+        if (!(data && data.checkboxes)) return;
+
+        const total = data.checkboxes.length;
+        data.checkboxes.forEach((checked, index) => {
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.id = `checkbox-${index}`;
+          input.checked = checked;
+
+          const section = getSection(index, total);
+          input.dataset.section = String(section);
+          input.style.setProperty("--segment-color", SECTION_COLORS[section]);
+
+          input.addEventListener("change", (event) => {
+            const nextChecked = event.target.checked;
+            socket.emit("client:checkbox:change", { index, checked: nextChecked });
+            updateSummary();
+          });
+
+          container.appendChild(input);
+        });
+
+        updateSummary();
+      });
+    </script>
   </body>
 </html>
