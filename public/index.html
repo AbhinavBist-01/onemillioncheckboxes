@@ -93,6 +93,26 @@
       animation: fade-in 600ms ease;
     }
 
+    #error-banner {
+      width: min(1100px, 100%);
+      margin: 0 0 0.9rem;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(248, 113, 113, 0.45);
+      border-radius: 14px;
+      background: rgba(69, 10, 10, 0.72);
+      color: #fecaca;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.4;
+      display: none;
+      box-shadow: 0 12px 32px rgba(69, 10, 10, 0.28);
+    }
+
+    #error-banner[data-visible="true"] {
+      display: block;
+    }
+
     #container input[type="checkbox"] {
       margin: 0;
       width: 1.15rem;
@@ -148,11 +168,26 @@
   <body>
     <h1>Checkboxes!!</h1>
 
+    <div id="error-banner" role="alert" aria-live="polite"></div>
+
     <div id="container">
       <script src="/socket.io/socket.io.js"></script>
       <script>
         const container = document.getElementById("container");
+        const errorBanner = document.getElementById("error-banner");
         const socket = io();
+
+        socket.on("server-error", (data) => {
+          const errorMessage = data.error;
+          errorBanner.textContent = errorMessage || "Something went wrong.";
+          errorBanner.dataset.visible = "true";
+
+          window.clearTimeout(window.errorBannerTimeoutId);
+          window.errorBannerTimeoutId = window.setTimeout(() => {
+            errorBanner.textContent = "";
+            delete errorBanner.dataset.visible;
+          }, 4000);
+        });
 
         socket.on("server:checkbox:change", (data) => {
           console.log(`Socket server `, data);

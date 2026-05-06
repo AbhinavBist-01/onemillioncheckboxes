@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import { publisher, subscriber, redis } from "./redis-connection.js";
 
 async function main() {
-  const PORT = process.env.PORT ?? 8000;
+  const PORT = process.env.PORT ?? 8001;
 
   const app = express();
   const server = http.createServer(app);
@@ -24,12 +24,12 @@ async function main() {
       const existingState = await redis.get(CHECKBOX_STATE_KEY);
       if (existingState) {
         const remoteData = JSON.parse(existingState);
+        remoteData[index] = checked;
         await redis.set(CHECKBOX_STATE_KEY, JSON.stringify(remoteData));
       } else {
-        await redis.set(
-          CHECKBOX_STATE_KEY,
-          JSON.stringify(new Array(CHECKBOX_COUNT).fill(false)),
-        );
+        const newState = new Array(CHECKBOX_COUNT).fill(false);
+        newState[index] = checked;
+        await redis.set(CHECKBOX_STATE_KEY, JSON.stringify(newState));
       }
       io.emit("server:checkbox:change", { index, checked });
     }
@@ -42,6 +42,18 @@ async function main() {
 
     socket.on("client:checkbox:change", async (data) => {
       console.log(`Socket : [${socket.id}]:client:checkbox:change`, data);
+
+      const lastOperation = await redis.get(`rate-limit:${socket.id}`);
+      if (lastOperation) {
+        const timeElapsed = Date.now() - parseInt(lastOperation);
+        if (timeElapsed < 5.5 * 1000) {
+          socket.emit("server-error", {
+            error: `Please wait before sending another update.`,
+          });
+          return;
+        }
+      }
+      await redis.set(`rate-limit:${socket.id}`, Date.now().toString());
 
       publisher.publish(
         "internal-server:checkbox:change",
